@@ -1,0 +1,15 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "Homework bot by Mykola Stepanenko",
+  "main": "bot.js",
+  "scripts": {},
+  "author": "Mykola Stepanenko",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
