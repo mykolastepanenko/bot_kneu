@@ -16,11 +16,25 @@ bot.on("message", (message) => {
   const chatId = message.chat.id;
   let res = logic(message.text);
   bot.sendMessage(chatId, res.msg, {
-    reply_markup: {
-      keyboard: res.keyboad,
-      // remove_keyboard: true,
-    },
+    parse_mode: "html",
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          { text: "1", callback_data: "it's a callback" },
+          { text: "2", callback_data: "it's a callback" },
+        ],
+        [
+          { text: "3", callback_data: "it's a callback" },
+          { text: "4", callback_data: "it's a callback" },
+        ],
+      ],
+    }),
   });
-  console.log(message);
-  console.log(res);
+  // console.log(message);
+  // console.log(res);
+});
+
+bot.on("callback_query", (update) => {
+  console.log(update.data);
+  bot.sendMessage(update.from.id, "Вы нажали на кнопку :)");
 });
