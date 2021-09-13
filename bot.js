@@ -3,6 +3,7 @@ const TelegramBot = require("node-telegram-bot-api");
 const logic = require("./logic");
 const menu = require("./src/menu");
 const token = process.env.BOT_ID;
+const callbackData = require("./src/callback");
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -13,28 +14,9 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 });
 
 bot.on("message", (message) => {
-  const chatId = message.chat.id;
-  let res = logic(message.text);
-  bot.sendMessage(chatId, res.msg, {
-    parse_mode: "html",
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [
-          { text: "1", callback_data: "it's a callback" },
-          { text: "2", callback_data: "it's a callback" },
-        ],
-        [
-          { text: "3", callback_data: "it's a callback" },
-          { text: "4", callback_data: "it's a callback" },
-        ],
-      ],
-    }),
-  });
-  // console.log(message);
-  // console.log(res);
+  logic(bot, message);
 });
 
-bot.on("callback_query", (update) => {
-  console.log(update.data);
-  bot.sendMessage(update.from.id, "Вы нажали на кнопку :)");
+bot.on("callback_query", (update)=>{
+  callbackData(bot, update)
 });
